@@ -2,7 +2,6 @@
 
 ### Project title: Active Learning ‘with-IN’ MOOC-style Videos 
 ### Student Name:  Jingren Wang, Class 2021
-### CP192 Section: Carter, W@18:00, Buenos Aires
 ### Major: Computational Science
 ### Concentrations: Artificial Intelligence & Data Science
 
