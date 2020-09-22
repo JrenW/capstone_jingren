@@ -28,3 +28,7 @@ The final product is going to be a working web app running on Flask virtual serv
 
 [Late Stage]
 0%
+
+
+## Resources
+### google drive link: https://drive.google.com/drive/folders/11VS7SFv23FTX2LhctoTj2ppV-NOeCDhf?usp=sharing
