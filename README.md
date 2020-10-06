@@ -37,13 +37,14 @@ Virtual environment is a key component in ensuring that the application is confi
 #### Requirements
 - Python 3
 - Pip 3
-> $ brew install python3
 Pip3 is installed with Python3
+
+    $ brew install python3
 
 #### Installation
 To install virtualenv via pip run:
 
-> $ pip3 install virtualenv
+    $ pip3 install virtualenv
 
 ### Deployment with Heroku
 The app will be deployed with Heroku: [Heroku link to be inserted]
@@ -52,17 +53,14 @@ The app will be deployed with Heroku: [Heroku link to be inserted]
 All environment variables will be stored within the .env file (yet to be created) and loaded with dotenv package.
 
 ### Run the Application (to be updated)
->$ python -m venv venv
->$ source venv/bin/activate
->#Activate virtual environment for MAC/UNIX
->$ venv\Scripts\activate
-> #Activate virtual environment for WINDOWS
-> $ pip install -r requirements.txt
-> $ export FLASK_ENV=development
-> $ export FLASK_CONFIG=dev
-> $ export FLASK_APP=web
-> $ python3 -m flask run
-
+    $ python -m venv venv
+    $ source venv/bin/activate # for MAC/UNIX
+    $ venv\Scripts\activate # for WINDOWS
+    $ pip install -r requirements.txt
+    $ export FLASK_ENV=development
+    $ export FLASK_CONFIG=dev
+    $ export FLASK_APP=web
+    $ python3 -m flask run
 
 ## Resources
 ### google drive link: https://drive.google.com/drive/folders/11VS7SFv23FTX2LhctoTj2ppV-NOeCDhf?usp=sharing
