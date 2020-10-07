@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Caption Search Home</title>
+    <title>Hyper video Home</title>
     <style>
     div.relative {
       position: relative;
@@ -22,6 +22,7 @@
       border: 3px solid #73AD21;
       z-index: 0;
     }
+
     img.flag_1 {
       position: absolute;
       left: 563px;
@@ -29,6 +30,7 @@
       width: 30px;
       height: 24px;
       z-index: 10;
+      border-radius: 50%;
   }
 
     img.flag_2 {
@@ -38,6 +40,7 @@
       width: 30px;
       height: 24px;
       z-index: 1;
+      border-radius: 50%;
   }
     img.flag_3 {
       position: absolute;
@@ -46,6 +49,7 @@
       width: 30px;
       height: 24px;
       z-index: 10;
+      border-radius: 50%;
   }
     img.flag_4 {
       position: absolute;
@@ -54,6 +58,7 @@
       width: 30px;
       height: 24px;
       z-index: 10;
+      border-radius: 50%;
   }
     img.flag_5 {
       position: absolute;
@@ -62,6 +67,7 @@
       width: 30px;
       height: 24px;
       z-index: 10;
+      border-radius: 50%;
   }
 
   div.caption{
@@ -72,8 +78,7 @@
     height: 420px;
     border: 3px solid #73AD21;
     z-index: -1;
-
-
+    border-radius: 50%;
   }
 
 
@@ -83,9 +88,9 @@
   </head>
 
   <script type="text/javascript">
-  var timeStamps = [100,800,1600,2800,3600];
+  var timeStamps = [100,500,700,1000,1200];
   var inputURL = ''
-
+s
   function displayInput(){
     inputURL = document.getElementById('videoURL').value;
     // change to embed end point
@@ -106,14 +111,11 @@
   }
 
   // play video from a specific time upon click of image flag_icon
-
   function jumpTime(idx){
     // embed specific start time into video URL
     jumpedURL = inputURL + '?start='+ String(timeStamps[idx])+'&autoplay=1';
      // reload the video
      document.getElementById("YouTubeVideo").src = jumpedURL;
-
-
    }
 
 
@@ -125,30 +127,42 @@
     <!-- let's get started -->
     <div class="relative">
       <h1>World's first YouTube video caption search engine</h1>
-
       <h3> >>> you can search any moment of a video by keyword here.</h3>
-
       <p style="color:brown;">please paste in a link to your YouTube video: </p>
+      <button type=”submit” name="button1" onclick="displayInput()"> Load Video </button>
 
-      <input onblur="displayInput()" id="videoURL" type="text" name="videoURL" value="">
+      <h3>Your current YouTube Link = {{input_url}}<h3>
 
-      <button type="button" name="button1" onclick="displayInput()">Here we go</button>
+      <form action="" method="POST">
+          <label> Enter Keyword </label>
+          <input name="keyword" id="keyword*" type="text" value="" placeholder="e.g.problem" required>
+          <label> Number of Results </label>
+          <input name="num_results"  id="num_results*" type="text" value="" placeholder="2" required>
+          <button type=”submit” name="form_butt" > DONE </button>
+      </form>
+
+
+      <h3>Keyword = {{keyword}}<h3>
+      <h3>Num_results = {{num_results}}<h3>
+      <h4>Notes: {{notes}}<h4>
+      <h4>Route Number: {{route}}<h4>
       <br>
+      <h3>Captions = {{captions}}<h3>
 
-      <p style="color:blue;">https://www.youtube.com/watch?v=BCiZc0n6COY</p>
+      <p style="color:blue;"> test link: https://www.youtube.com/watch?v=BCiZc0n6COY</p>
       <p id='inputAlert'></p>
 
       <p id='videoID'></p>
       <br>
 
 
-      <iframe id='YouTubeVideo' width="560" height="420" src="" frameborder="0" allowfullscreen ng-show="showvideo"></iframe>
+      <iframe id='YouTubeVideo' width="1060" height="820" src={{ autoplay_link }} frameborder="0" allowfullscreen ng-show="showvideo"></iframe>
 
-      <img id='icon_1' onclick='jumpTime(0)' src="templates/eye_icon.png" alt="me.jpeg" class='flag_1'>
-      <img id='icon_2' onclick='jumpTime(1)' src="eye_icon.png" alt="me.jpeg" class='flag_2'>
-      <img id='icon_3' onclick='jumpTime(2)' src="eye_icon.png" alt="me.jpeg" class='flag_3'>
-      <img id='icon_4' onclick='jumpTime(3)' src="eye_icon.png" alt="me.jpeg" class='flag_4'>
-      <img id='icon_5' onclick='jumpTime(4)' src="eye_icon.png" alt="me.jpeg" class='flag_5'>
+      <img id='icon_1' onclick='jumpTime(0)' src="/static/icons/eye_icon.png" alt="me.jpeg" class='flag_1'>
+      <img id='icon_2' onclick='jumpTime(1)' src="/static/icons/eye_icon.png" alt="me.jpeg" class='flag_2'>
+      <img id='icon_3' onclick='jumpTime(2)' src="/static/icons/eye_icon.png" alt="me.jpeg" class='flag_3'>
+      <img id='icon_4' onclick='jumpTime(3)' src="/static/icons/eye_icon.png" alt="me.jpeg" class='flag_4'>
+      <img id='icon_5' onclick='jumpTime(4)' src="/static/icons/eye_icon.png" alt="me.jpeg" class='flag_5'>
 
       <p id='caption_1' style="position:absolute; top:300px; left:600px; z-index: 8;" > caption 1 </p>
       <p id='caption_2' style="position:absolute; top:393px; left:600px; z-index: 8;" > caption 2</p>
