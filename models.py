@@ -16,6 +16,10 @@ def search_cap(YouTube_URL, keyword,num_results):
     Kwords = keyword.split()
     k = num_results
 
+    # get total video duration = last caption start time + last caption duration
+    last_caption = capDicts[-1]
+    total_duration = last_caption["start"]+last_caption["duration"]
+
     # split input into a list of words <str>
     kw_moments = []
     kw_indices = []
@@ -39,11 +43,15 @@ def search_cap(YouTube_URL, keyword,num_results):
     else:
         results_indices = kw_indices
 
-    # build time-caption dictionary retrieve keyword time stamp and captions
+    # build time-caption dictionary retrieve keyword time stamp, captions and % progression
     caption_list = []
     for idx in results_indices:
+        # convert time to % progression
+
         time_caption_dict = {'time':capDicts[idx]['start'],
-                             'caption': capDicts[idx]['text']}
+                             'caption': capDicts[idx]['text'],
+                             'progress': capDicts[idx]['start']/total_duration}
+
         caption_list.append(time_caption_dict)
-        
+
     return caption_list

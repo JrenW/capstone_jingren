@@ -2,173 +2,221 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Hyper video Home</title>
+    <title>Caption Search</title>
     <style>
-    div.relative {
-      position: relative;
-      left: 180px;
-      width: 800px;
-      height: 900px;
-      /* border: 3px solid #73AD21; */
+
+      .result_icons {
+          position: relative;
+          width: 800px; ;
+          height: 600px ;
+          margin-top: 20px;
+      }
+
+      .video_frame {
+          position: absolute;
+          top: 0;
+          width: 800px;
+          height: 600px;
+          /* background: #000; */
+      }
+
+      .caption_icon {
+          position: absolute;
+          top: 554px;
+          width: 17px;
+          height: 17px;
+          border-radius: 50%;
+          z-index: 1;
+      }
+
+
+      div.relative {
+        position: relative;
+        left: 180px;
+        width: 800px;
+        height: 900px;
+        /* border: 3px solid #73AD21; */
+      }
+
+      div.absolute {
+        position: absolute;
+        top: 260px;
+        right: 100px;
+
+        width: 800px;
+        height: 420px;
+        border: 3px solid #73AD21;
+        z-index: 0;
+      }
+
+      img.flag_1 {
+        position: absolute;
+        left: 563px;
+        top: 310px;
+        width: 30px;
+        height: 24px;
+        z-index: 10;
+        border-radius: 50%;
     }
 
-    div.absolute {
-      position: absolute;
-      top: 260px;
-      right: 100px;
+      img.flag_2 {
+        position: absolute;
+        left: 563px;
+        top: 403px;
+        width: 30px;
+        height: 24px;
+        z-index: 1;
+        border-radius: 50%;
+    }
+      img.flag_3 {
+        position: absolute;
+        left: 563px;
+        top: 486px;
+        width: 30px;
+        height: 24px;
+        z-index: 10;
+        border-radius: 50%;
+    }
+      img.flag_4 {
+        position: absolute;
+        left: 563px;
+        top: 579px;
+        width: 30px;
+        height: 24px;
+        z-index: 10;
+        border-radius: 50%;
+    }
+      img.flag_5 {
+        position: absolute;
+        left: 563px;
+        top: 672px;
+        width: 30px;
+        height: 24px;
+        z-index: 10;
+        border-radius: 50%;
+    }
 
-      width: 800px;
+    div.caption{
+      position: absolute;
+      left:200px;
+      top: 260px;
+      width: 300px;
       height: 420px;
       border: 3px solid #73AD21;
-      z-index: 0;
+      z-index: -1;
+      border-radius: 50%;
     }
 
-    img.flag_1 {
-      position: absolute;
-      left: 563px;
-      top: 310px;
-      width: 30px;
-      height: 24px;
-      z-index: 10;
-      border-radius: 50%;
-  }
+  </style>
 
-    img.flag_2 {
-      position: absolute;
-      left: 563px;
-      top: 403px;
-      width: 30px;
-      height: 24px;
-      z-index: 1;
-      border-radius: 50%;
-  }
-    img.flag_3 {
-      position: absolute;
-      left: 563px;
-      top: 486px;
-      width: 30px;
-      height: 24px;
-      z-index: 10;
-      border-radius: 50%;
-  }
-    img.flag_4 {
-      position: absolute;
-      left: 563px;
-      top: 579px;
-      width: 30px;
-      height: 24px;
-      z-index: 10;
-      border-radius: 50%;
-  }
-    img.flag_5 {
-      position: absolute;
-      left: 563px;
-      top: 672px;
-      width: 30px;
-      height: 24px;
-      z-index: 10;
-      border-radius: 50%;
-  }
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+    // test jQuery
 
-  div.caption{
-    position: absolute;
-    left:200px;
-    top: 260px;
-    width: 300px;
-    height: 420px;
-    border: 3px solid #73AD21;
-    z-index: -1;
-    border-radius: 50%;
-  }
+      $( document ).ready(function() {
+        // $('img').hide();
+        // $(document).on("click",'form_butt', function(){
+        //     $('#search_results').load(document.URL + ' #search_results');
+        // });
+        // stackoverflow ref: https://stackoverflow.com/questions/18618865/load-part-page-with-jquery-ajax
+        $("#form_butt").on("click", function(){
+          // alert("The paragraph was clicked.");
+          $("#search_results").load(document.URL + " #search_results");
+          });
+       //
+
+      });
 
 
-</style>
+    var time_stamp = time_stamp;
+    var inputURL = ''
 
+    function displayInput(){
+      inputURL = document.getElementById('videoURL').value;
+      // change to embed end point
+      inputURL = inputURL.replace('https://www.youtube.com/watch?v=',
+      'https://www.youtube.com/embed/');
+
+      var videoID = inputURL.split('/embed/')[1];//extract YouTube video id
+
+      if (inputURL.length == 0 ){
+        document.getElementById("inputAlert").innerHTML = "you haven't pasted in anything...";
+        document.getElementById('videoID').innerHTML = 'no video id detected...';
+      }
+      else
+        document.getElementById("inputAlert").innerHTML = 'YouTube URL:  '+inputURL;
+        document.getElementById('videoID').innerHTML = 'YouTube video ID:   '+ videoID;
+        // insert video source to iframe
+        document.getElementById("YouTubeVideo").src = inputURL;
+    }
+
+    // play video from a specific time upon click of image flag_icon
+    function jumpTime(i){
+      // embed specific start time into video URL
+      jumpedURL = inputURL + '?start='+ String({{ time_stamp[i] }})+'&autoplay=1';
+      // jumpedURL = inputURL + '?start='+ String(timeStamps[i])+'&autoplay=1';
+       // reload the video
+       document.getElementById("YouTubeVideo").src = jumpedURL;
+     }
+
+    </script>
 
   </head>
 
-  <script type="text/javascript">
-  var timeStamps = [100,500,700,1000,1200];
-  var inputURL = ''
-s
-  function displayInput(){
-    inputURL = document.getElementById('videoURL').value;
-    // change to embed end point
-    inputURL = inputURL.replace('https://www.youtube.com/watch?v=',
-    'https://www.youtube.com/embed/');
-
-    var videoID = inputURL.split('/embed/')[1];//extract YouTube video id
-
-    if (inputURL.length == 0 ){
-      document.getElementById("inputAlert").innerHTML = "you haven't pasted in anything...";
-      document.getElementById('videoID').innerHTML = 'no video id detected...';
-    }
-    else
-      document.getElementById("inputAlert").innerHTML = 'YouTube URL:  '+inputURL;
-      document.getElementById('videoID').innerHTML = 'YouTube video ID:   '+ videoID;
-      // insert video source to iframe
-      document.getElementById("YouTubeVideo").src = inputURL;
-  }
-
-  // play video from a specific time upon click of image flag_icon
-  function jumpTime(idx){
-    // embed specific start time into video URL
-    jumpedURL = inputURL + '?start='+ String(timeStamps[idx])+'&autoplay=1';
-     // reload the video
-     document.getElementById("YouTubeVideo").src = jumpedURL;
-   }
-
-
-  </script>
 
 
 
   <body>
     <!-- let's get started -->
-    <div class="relative">
+    <div class="relative" >
+
       <h1>World's first YouTube video caption search engine</h1>
       <h3> >>> you can search any moment of a video by keyword here.</h3>
-      <p style="color:brown;">please paste in a link to your YouTube video: </p>
-      <button type=”submit” name="button1" onclick="displayInput()"> Load Video </button>
+      <p style="color:brown;">** current link ** : {{user_url}}</p>
 
-      <h3>Your current YouTube Link = {{input_url}}<h3>
+      <div class="result_icons">
+        <!-- For loop logic of jinja template -->
+          {%for i in range(0, len)%}
+                <img class='caption_icon' id='icon_1' onclick='jumpTime({{i}})' src="/static/icons/eye_icon.png" alt="me.jpeg"
+            style=" position: relative; left: {{icon_pos[i]}}px; ">
+          {%endfor%}
 
-      <form action="" method="POST">
-          <label> Enter Keyword </label>
-          <input name="keyword" id="keyword*" type="text" value="" placeholder="e.g.problem" required>
-          <label> Number of Results </label>
-          <input name="num_results"  id="num_results*" type="text" value="" placeholder="2" required>
-          <button type=”submit” name="form_butt" > DONE </button>
-      </form>
+          <div class="video_frame">
+              <iframe id='YouTubeVideo' width="800"  height="600" src="{{user_url}}" frameborder="0" ng-show="showvideo"></iframe>
+          </div>
 
+      </div>
 
-      <h3>Keyword = {{keyword}}<h3>
-      <h3>Num_results = {{num_results}}<h3>
-      <h4>Notes: {{notes}}<h4>
-      <h4>Route Number: {{route}}<h4>
-      <br>
-      <h3>Captions = {{captions}}<h3>
+      <div id='keyword_form'>
+        <form action="" method="POST">
+            <label> Enter Keyword </label>
+            <input name="keyword" id="keyword*" type="text" value="" placeholder="e.g.problem" required>
+            <label> Number of Results </label>
+            <input name="num_results"  id="num_results*" type="text" value="" placeholder="2" required>
+            <button type=”submit” name="form_butt" > Search </button>
+        </form>
+      </div>
 
-      <p style="color:blue;"> test link: https://www.youtube.com/watch?v=BCiZc0n6COY</p>
-      <p id='inputAlert'></p>
+      <div id='search_results'>
+        <h3>Keyword = {{keyword}}<h3>
+        <h3>Num_results = {{num_results}}<h3>
+        <h4>Notes: {{notes}}<h4>
+        <h4>Route Number: {{route}}<h4>
+        <h3>*Captions = {{captions}}<h3>
+        <h3>*icon_positions = {{icon_pos}}<h3>
 
-      <p id='videoID'></p>
-      <br>
-
-
-      <iframe id='YouTubeVideo' width="1060" height="820" src={{ autoplay_link }} frameborder="0" allowfullscreen ng-show="showvideo"></iframe>
-
-      <img id='icon_1' onclick='jumpTime(0)' src="/static/icons/eye_icon.png" alt="me.jpeg" class='flag_1'>
-      <img id='icon_2' onclick='jumpTime(1)' src="/static/icons/eye_icon.png" alt="me.jpeg" class='flag_2'>
-      <img id='icon_3' onclick='jumpTime(2)' src="/static/icons/eye_icon.png" alt="me.jpeg" class='flag_3'>
-      <img id='icon_4' onclick='jumpTime(3)' src="/static/icons/eye_icon.png" alt="me.jpeg" class='flag_4'>
-      <img id='icon_5' onclick='jumpTime(4)' src="/static/icons/eye_icon.png" alt="me.jpeg" class='flag_5'>
-
-      <p id='caption_1' style="position:absolute; top:300px; left:600px; z-index: 8;" > caption 1 </p>
-      <p id='caption_2' style="position:absolute; top:393px; left:600px; z-index: 8;" > caption 2</p>
-      <p id='caption_3' style="position:absolute; top:480px; left:600px; z-index: 8;"> caption 3</p>
-      <p id='caption_4' style="position:absolute; top:560px; left:600px; z-index: 8;"> caption 4</p>
-      <p id='caption_5' style="position:absolute; top:660px; left:600px; z-index: 8;"> caption 5</p>
+          <!-- <img id='icon_1' onclick='jumpTime(0)' src="/static/icons/eye_icon.png" alt="me.jpeg" class='flag_1'>
+          <img id='icon_2' onclick='jumpTime(1)' src="/static/icons/eye_icon.png" alt="me.jpeg" class='flag_2'>
+          <img id='icon_3' onclick='jumpTime(2)' src="/static/icons/eye_icon.png" alt="me.jpeg" class='flag_3'>
+          <img id='icon_4' onclick='jumpTime(3)' src="/static/icons/eye_icon.png" alt="me.jpeg" class='flag_4'>
+          <img id='icon_5' onclick='jumpTime(4)' src="/static/icons/eye_icon.png" alt="me.jpeg" class='flag_5'> -->
+<!--
+          <p id='caption_1' style="position:absolute; top:300px; left:600px; z-index: 8;" > caption 1 </p>
+          <p id='caption_2' style="position:absolute; top:393px; left:600px; z-index: 8;" > caption 2</p>
+          <p id='caption_3' style="position:absolute; top:480px; left:600px; z-index: 8;"> caption 3</p>
+          <p id='caption_4' style="position:absolute; top:560px; left:600px; z-index: 8;"> caption 4</p>
+          <p id='caption_5' style="position:absolute; top:660px; left:600px; z-index: 8;"> caption 5</p> -->
+      </div>
 
     </div>
 

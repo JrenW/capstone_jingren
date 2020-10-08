@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Hyper video Home</title>
+    <title>Hypervideo Home</title>
     <style>
     div.relative {
       position: relative;
@@ -81,9 +81,7 @@
     border-radius: 50%;
   }
 
-
 </style>
-
 
   </head>
 
@@ -92,24 +90,21 @@
     <div class="relative">
       <h1>World's first YouTube video caption search engine</h1>
       <h3> >>> you can search any moment of a video by keyword here.</h3>
-      <p style="color:brown;">please paste in a link to your YouTube video: </p>
-      <button type=”submit” name="button1" onclick="displayInput()"> Load Video </button>
+      <h6>*This app currently only support YouTube videos with transcripts ("CC" button available at the bottom of your video frame.)</h6>
 
+      <p style="color:brown;">please paste in a link to your YouTube video: </p>
+      <p style="color:blue;"> test link: https://www.youtube.com/watch?v=BCiZc0n6COY</p>
       <form action="" method="POST">
           <label> YouTube Link </label>
-          <input name="videoURL" id="videoURL" type="text" value="">
+          <input name="videoURL" id="videoURL" type="text" value="" placeholder="Add YouTube Link">
           <button type=”submit” name="form_butt" > LOAD </button>
       </form>
 
-      <form action="" method="POST">
-          <label> Enter Keyword </label>
-          <input name="keyword" id="keyword" type="text" value="">
-          <label> Number of Results </label>
-          <input name="num_results"  id="num_results" type="text" value="">
-          <button type=”submit” name="form_butt" > DONE </button>
-      </form>
+      <h3>Route Check<h3>
+      <h4>Route Number: {{route}}<h4>
+      <h4>Notes: {{notes}}<h4>
 
-
+    </div>
 
   </body>
 </html>
