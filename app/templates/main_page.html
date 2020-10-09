@@ -49,64 +49,6 @@
         z-index: 0;
       }
 
-      img.flag_1 {
-        position: absolute;
-        left: 563px;
-        top: 310px;
-        width: 30px;
-        height: 24px;
-        z-index: 10;
-        border-radius: 50%;
-    }
-
-      img.flag_2 {
-        position: absolute;
-        left: 563px;
-        top: 403px;
-        width: 30px;
-        height: 24px;
-        z-index: 1;
-        border-radius: 50%;
-    }
-      img.flag_3 {
-        position: absolute;
-        left: 563px;
-        top: 486px;
-        width: 30px;
-        height: 24px;
-        z-index: 10;
-        border-radius: 50%;
-    }
-      img.flag_4 {
-        position: absolute;
-        left: 563px;
-        top: 579px;
-        width: 30px;
-        height: 24px;
-        z-index: 10;
-        border-radius: 50%;
-    }
-      img.flag_5 {
-        position: absolute;
-        left: 563px;
-        top: 672px;
-        width: 30px;
-        height: 24px;
-        z-index: 10;
-        border-radius: 50%;
-    }
-
-    div.caption{
-      position: absolute;
-      left:200px;
-      top: 260px;
-      width: 300px;
-      height: 420px;
-      border: 3px solid #73AD21;
-      z-index: -1;
-      border-radius: 50%;
-    }
-
   </style>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -120,41 +62,47 @@
         // });
         // stackoverflow ref: https://stackoverflow.com/questions/18618865/load-part-page-with-jquery-ajax
         $("#form_butt").on("click", function(){
-          // alert("The paragraph was clicked.");
-          $("#search_results").load(document.URL + " #search_results");
+          $("#search_results").load("#search_results");
           });
+
+        // functionality: click on an eye_icon and jump start from that mometn
+        // solution:https://stackoverflow.com/questions/26257395/change-time-in-embedded-youtube-video-when-a-button-is-clicked
+        $("#caption_icon").on("click", function(){
+            $("#caption_icon").attr("value");
+            });
+
        //
 
       });
 
 
-    var time_stamp = time_stamp;
-    var inputURL = ''
+    var time_stamp = {{time_stamp}};
+    var inputURL = user_url;
 
-    function displayInput(){
-      inputURL = document.getElementById('videoURL').value;
-      // change to embed end point
-      inputURL = inputURL.replace('https://www.youtube.com/watch?v=',
-      'https://www.youtube.com/embed/');
-
-      var videoID = inputURL.split('/embed/')[1];//extract YouTube video id
-
-      if (inputURL.length == 0 ){
-        document.getElementById("inputAlert").innerHTML = "you haven't pasted in anything...";
-        document.getElementById('videoID').innerHTML = 'no video id detected...';
-      }
-      else
-        document.getElementById("inputAlert").innerHTML = 'YouTube URL:  '+inputURL;
-        document.getElementById('videoID').innerHTML = 'YouTube video ID:   '+ videoID;
-        // insert video source to iframe
-        document.getElementById("YouTubeVideo").src = inputURL;
-    }
+    // function displayInput(){
+    //   inputURL = document.getElementById('videoURL').value;
+    //   // change to embed end point
+    //   inputURL = inputURL.replace('https://www.youtube.com/watch?v=',
+    //   'https://www.youtube.com/embed/');
+    //
+    //   var videoID = inputURL.split('/embed/')[1];//extract YouTube video id
+    //
+    //   if (inputURL.length == 0 ){
+    //     document.getElementById("inputAlert").innerHTML = "you haven't pasted in anything...";
+    //     document.getElementById('videoID').innerHTML = 'no video id detected...';
+    //   }
+    //   else
+    //     document.getElementById("inputAlert").innerHTML = 'YouTube URL:  '+inputURL;
+    //     document.getElementById('videoID').innerHTML = 'YouTube video ID:   '+ videoID;
+    //     // insert video source to iframe
+    //     document.getElementById("YouTubeVideo").src = inputURL;
+    // }
 
     // play video from a specific time upon click of image flag_icon
     function jumpTime(i){
+      i = int(i)
       // embed specific start time into video URL
-      jumpedURL = inputURL + '?start='+ String({{ time_stamp[i] }})+'&autoplay=1';
-      // jumpedURL = inputURL + '?start='+ String(timeStamps[i])+'&autoplay=1';
+      jumpedURL = {{user_url}} + '?start='+ String(time_stamp[i]);
        // reload the video
        document.getElementById("YouTubeVideo").src = jumpedURL;
      }
@@ -177,8 +125,8 @@
       <div class="result_icons">
         <!-- For loop logic of jinja template -->
           {%for i in range(0, len)%}
-                <img class='caption_icon' id='icon_1' onclick='jumpTime({{i}})' src="/static/icons/eye_icon.png" alt="me.jpeg"
-            style=" position: relative; left: {{icon_pos[i]}}px; ">
+                <img class='caption_icon' id='eye_icon' value={{i}} onclick='jumpTime({{i}})' src="/static/icons/eye_icon.png" alt="me.jpeg"
+            style=" position: absolute; left: {{icon_pos[i]}}px; ">
           {%endfor%}
 
           <div class="video_frame">
@@ -193,7 +141,7 @@
             <input name="keyword" id="keyword*" type="text" value="" placeholder="e.g.problem" required>
             <label> Number of Results </label>
             <input name="num_results"  id="num_results*" type="text" value="" placeholder="2" required>
-            <button type=”submit” name="form_butt" > Search </button>
+            <button type=”submit” name="form_butt"> Search </button>
         </form>
       </div>
 
@@ -204,18 +152,8 @@
         <h4>Route Number: {{route}}<h4>
         <h3>*Captions = {{captions}}<h3>
         <h3>*icon_positions = {{icon_pos}}<h3>
+        <h3>*time_stamps = {{time_stamp}}<h3>
 
-          <!-- <img id='icon_1' onclick='jumpTime(0)' src="/static/icons/eye_icon.png" alt="me.jpeg" class='flag_1'>
-          <img id='icon_2' onclick='jumpTime(1)' src="/static/icons/eye_icon.png" alt="me.jpeg" class='flag_2'>
-          <img id='icon_3' onclick='jumpTime(2)' src="/static/icons/eye_icon.png" alt="me.jpeg" class='flag_3'>
-          <img id='icon_4' onclick='jumpTime(3)' src="/static/icons/eye_icon.png" alt="me.jpeg" class='flag_4'>
-          <img id='icon_5' onclick='jumpTime(4)' src="/static/icons/eye_icon.png" alt="me.jpeg" class='flag_5'> -->
-<!--
-          <p id='caption_1' style="position:absolute; top:300px; left:600px; z-index: 8;" > caption 1 </p>
-          <p id='caption_2' style="position:absolute; top:393px; left:600px; z-index: 8;" > caption 2</p>
-          <p id='caption_3' style="position:absolute; top:480px; left:600px; z-index: 8;"> caption 3</p>
-          <p id='caption_4' style="position:absolute; top:560px; left:600px; z-index: 8;"> caption 4</p>
-          <p id='caption_5' style="position:absolute; top:660px; left:600px; z-index: 8;"> caption 5</p> -->
       </div>
 
     </div>

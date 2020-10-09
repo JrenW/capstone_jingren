@@ -53,12 +53,12 @@ def captionSearch():
             session['search_results'] = captions # save those search results
 
             # convert caption results into icon positions on html
-            frame_width = 600 # set as 800px
+            frame_width = 776 # set as 800px
             icon_pos = []
             time_stamp = []
 
             for cap in captions:
-                pos = str(frame_width * cap['progress'])
+                pos = str(frame_width * cap['progress']+12) #left-shift 12px
                 icon_pos.append(pos)
                 time_stamp.append(cap['time'])
 
