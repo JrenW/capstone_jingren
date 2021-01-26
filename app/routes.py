@@ -29,7 +29,7 @@ def captionSearch():
     input_url = session['input_url']
     # prossess the link string to embed in HTML & autoplay
     embeded_url = input_url.replace('https://www.youtube.com/watch?v=',
-            'http://www.youtube.com/embed/');
+            'https://www.youtube.com/embed/');
     user_url = embeded_url+'?autoplay=1?control=0'
     # store user url for the current session before search
     session['user_url'] = user_url
@@ -71,7 +71,7 @@ def captionSearch():
                             keyword=keyword, num_results=str(num_results),
                             route='capSearch_1', captions=captions,
                             icon_pos=icon_pos,time_stamp=time_stamp,
-                            len=len(icon_pos))
+                            len=len(icon_pos), notes="successful caption search" )
 
                 # return render_template('main_page.html', captions=captions,
                 #         keyword=keyword, num_results=num_results)
@@ -107,7 +107,7 @@ def renderMain():
             return render_template('home.html',route='home_1_no_link_input')
 
     else:
-        return render_template('home.html',route='home_2')
+        return render_template('home.html',route='home_2', notes="successful home rendering!")
 
 
 

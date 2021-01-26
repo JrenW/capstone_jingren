@@ -1,0 +1,83 @@
+<style>
+div.relative {
+  position: relative;
+  width: 800px;
+  height: 900px;
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+  /* border: 3px solid #73AD21; */
+}
+
+div.absolute {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+
+  position: absolute;
+  top: 260px;
+  right: 100px;
+
+  width: 800px;
+  height: 420px;
+  /* border: 3px solid #73AD21; */
+  z-index: 0;
+}
+
+  .input_link {
+    text-align: center;
+
+  }
+  .route_check{
+    display: none;
+    position: relative;
+    top: 0px;
+  }
+
+  .debug{
+    position: relative;
+    top: 0px;
+    left: 0px;
+    width: 100px;
+    height: 20px;
+    z-index: 1;
+    background: #F8E016;
+    opacity: 0.9;
+    border-radius: 20px;
+  }
+
+  #route_debug {
+    position: relative;
+    text-align: center;
+    margin-top:5px;
+    z-index: 1;
+  }
+
+  #videoURL{
+    position: relative;
+    align: center;
+    margin-top: 5px;
+    /* left:40%; */
+    width: 450px;
+    z-index: 1;
+  }
+
+div.caption{
+position: absolute;
+left:200px;
+top: 260px;
+width: 300px;
+height: 420px;
+border: 3px solid #73AD21;
+z-index: -1;
+border-radius: 50%;
+}
+
+  body{
+    /* background-image: url("paper.gif"); */
+    background-color: #cccccc;
+  }
+
+
+
+</style>
