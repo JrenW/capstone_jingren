@@ -48,26 +48,57 @@ app.config['UPLOAD_FOLDER'] = FILE_FOLDER   # flask app configure files to be up
 # def json_hyper_explorer(data):
 #     response = jsonify(data)
 
-def make_queryURL(explorer_query):
-    query_url = explorer_query.replace(' ','+')
-    query_url = "https://www.google.com/search?igu=1&ei=&q=" + query_url# str for the embedded explorer
-    return query_url
+def embedYouTube(input_url):
+    # convert link to be embedable in HTML
+    new_url = input_url.replace('https://www.youtube.com/watch?v=',
+            'https://www.youtube.com/embed/');
+    # also turn on autoplay when page loads
+    ytb_configurations = '?autoplay=1&mute=1&cc_load_policy=1&fs=0&modestbranding=1&enablejsapi=1&rel=0&loop=1'
+    # make embedded YouTube url
+    embedded_url = new_url+ ytb_configurations+'&origin='+input_url
+
+    return embedded_url
+
+# def embedWikipedia(input_url):
+#
+#     return embedded_url
+
+
+
+
+def make_queryURL(user_query_url):
+    embedded_url = ''
+    # 1 - check if it's a youtube url
+    if 'www.youtube.com/watch?v=' in user_query_url:
+        # make embedded YouTube url
+        embedded_url = embedYouTube(user_query_url)
+        return embedded_url
+
+    elif "www.ted.com/talks" in user_query_url:
+        embedded_url = user_query_url.replace("www.ted", "embed.ted")
+        return embedded_url
+        # make embedded TED talks url
+
+
+    # https://www.ted.com/talks/david_mackay_a_reality_check_on_renewables?language=en
+
+    else:
+        return user_query_url  # return original url
 
 
 @app.route('/explorer_query', methods=['GET','POST'])
 def explorer_query():
-    # query = request.form
-    # print(query)
+    # return appropriate url for embedded display depending on url type
     if request.method == "POST":
         query_str = request.form['current_query']
         # query_str = data['current_query']   #retrieve the query string from user input
-        # print("-----1- ",query_str)
+        print("-----1- ",query_str)
         query_url = make_queryURL(query_str) # convert to embedded explorer url for display
-        # print("-----2- ",query_url)
+        print("-----2- ",query_url)
         response = jsonify({ 'user_query':  query_str,
-                            'user_query_url':  query_url })
+                             'user_embedded_url':  query_url })
 
-        # print(response)
+        print("-----3- ",response)
         return response
 
     if request.method == "GET":
@@ -160,6 +191,7 @@ def renderApp(): # feature 2 processing
     return render_template('main.html', session=session)
 
 
+
 @app.route('/', methods=['GET','POST'])
 def renderHome():
     # get video URL from user input * should be a CC-ed YouTube link, or null
@@ -167,11 +199,14 @@ def renderHome():
 
     if request.method == 'POST':
         if input_url: # if there's some input
+
             # convert link to be embedable in HTML
-            embeded_url = input_url.replace('https://www.youtube.com/watch?v=',
-                    'https://www.youtube.com/embed/');
-            # also turn on autoplay when page loads
-            user_url = embeded_url + '?autoplay=1&mute=1' + '&origin='+input_url
+            # embeded_url = input_url.replace('https://www.youtube.com/watch?v=',
+            #         'https://www.youtube.com/embed/');
+            # # also turn on autoplay when page loads
+            # ytb_configurations = '?autoplay=1&mute=1&cc_load_policy=1&fs=0&modestbranding=1&enablejsapi=1&rel=0&loop=1'
+            # user_url = embeded_url+ ytb_configurations+'&origin='+input_url
+            user_url = embedYouTube(input_url)
 
             # store user url at current session
             session['user_url'] = user_url
