@@ -3,7 +3,11 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from models import search_cap
 import os
 import json
+import requests
 
+# set secret key for the session
+import secrets
+app.secret_key = secrets.token_urlsafe(16)
 
 ###########
 # jQuery w Flask, tutorial:
@@ -16,135 +20,167 @@ import json
 FILE_FOLDER = os.path.join('static', 'uploads')
 app.config['UPLOAD_FOLDER'] = FILE_FOLDER   # flask app configure files to be uploaded
 
-# set secret key for the session
-import secrets
-app.secret_key = secrets.token_urlsafe(16)
-
-@app.route('/hypervideo/', methods=['POST'])
-def hypervideo():
-    session['user_url'] = request.form.get('user_url')
-        # >>> should be the first route right after submission of input link
-    return render_template('main_page.html', session=session,
-        route='capSearch_3_no_search_yet', len=0, time_stamp=[])
+# @app.route('/cap_search', methods=['GET','POST'])
+# def video_hyperlink(): # feature 2 processing
+#     user_url = request.form.get['']
+#     return
 
 
-@app.route('/caption_search/', methods=['POST'])
-def caption_search():
-    # # first, fetch and process input URL
-    # input_url = session['input_url']
-    # # prossess the link string to embed in HTML & autoplay
-    # embeded_url = input_url.replace('https://www.youtube.com/watch?v=',
-    #         'https://www.youtube.com/embed/');
-    # user_url = embeded_url+'?autoplay=1?control=0'
-    # # store user url for the current session before search
-    # session['user_url'] = user_url
-
-    user_url=session['user_url']
-    # initialize session variables
-    session['keyword'] = None
-    session['num_results'] = None
-    session['explorer_url'] = None
+# @app.route('/hypervideo/', methods=['POST'])
+# def hypervideo():
+#     session['user_url'] = request.form.get('user_url')
+#         # >>> should be the first route right after submission of input link
+#     return render_template('main.html', session=session,
+#         route='capSearch_3_no_search_yet', len=0, time_stamp=[])
 
 
-    if request.method == 'POST':
-        # fetch user input (from all three features)
-        keyword = request.form.get('keyword')
-        num_results = request.form.get('num_results')
+# @app.route('/ajax')
+# def ajax() :
+#
+#     current_query = request.form.get('explorer_query')
+#     current_query_url = make_queryURL(current_query)
+#     response = jsonify({'user_query': current_query,
+#                             'query_url': current_query_url })
+#
+#     return response
 
-        # save in cookie
-        session['keyword'] = keyword
-        session['num_results'] = num_results
-        original_URL = session['input_url']
+# @app.route('/app/hyper_explorer_json')
+# def json_hyper_explorer(data):
+#     response = jsonify(data)
 
-
-        # feature 1 inputs if any check necessary inputs to start a search
-        if None not in (original_URL, keyword, num_results):
-            # search caption and display
-            captions = search_cap(original_URL, keyword, int(num_results))
-            session['search_results'] = captions # save those search results
-            # convert caption results into icon positions on html
-            frame_width = 776 # set as 800px
-            icon_pos = []
-            time_stamp = []
-
-            for cap in captions:
-                pos = str(frame_width * cap['progress']+12) #left-shift 12px
-                icon_pos.append(pos)
-                time_stamp.append(cap['time'])
-            #
-            # session['input_url'] = original_URL # save the original url again
-            #
-            # response = make_response(jsonify(user_url=session['user_url'],
-            #             keyword=session['keyword'], num_results=str(session['num_results']),
-            #             explorer_url=session['explorer_url'],
-            #             captions=captions,
-            #             icon_pos=icon_pos, time_stamp=time_stamp,
-            #             len=len(icon_pos),
-            #             route='capSearch_1', notes="successful caption search" ))
-            #
-            # return response
-
-            #*NEW IDEA: don't render template, but return a json file
-                # sending searched results to jquery for sectional display
-                # tutorial: https://stackoverflow.com/questions/52290310/receive-data-with-flask-and-send-data-with-jquery
-
-            return render_template('main_page.html',session=session, user_url=user_url,
-                            original_URL=session['input_url'],
-                            keyword=keyword, num_results=str(num_results),
-                            route='capSearch_1', captions=captions,
-                            icon_pos=icon_pos,time_stamp=time_stamp,
-                            len=len(icon_pos), notes="successful caption search" )
+def make_queryURL(explorer_query):
+    query_url = explorer_query.replace(' ','+')
+    query_url = "https://www.google.com/search?igu=1&ei=&q=" + query_url# str for the embedded explorer
+    return query_url
 
 
-@app.route('/video_hyperlink/', methods=['POST'])
-def video_hyperlink():
-    # feature 2 inputs if any
+@app.route('/explorer_query', methods=['GET','POST'])
+def explorer_query():
+    # query = request.form
+    # print(query)
+    if request.method == "POST":
+        query_str = request.form['current_query']
+        # query_str = data['current_query']   #retrieve the query string from user input
+        # print("-----1- ",query_str)
+        query_url = make_queryURL(query_str) # convert to embedded explorer url for display
+        # print("-----2- ",query_url)
+        response = jsonify({ 'user_query':  query_str,
+                            'user_query_url':  query_url })
+
+        # print(response)
+        return response
+
+    if request.method == "GET":
+        print('GET enabled!!!')
+
+        print()
+        return 'GET enabled!!!'
+
+
+@app.route('/caption_search', methods=['GET','POST'])
+def search_caption():
+    # query = request.form
+    # print(query)
+    if request.method == "POST":
+        # prepare relevant user data for caption search
+        user_keyword = request.form['current_keyword'] # retrieve user keyword from input
+        user_num_results  = int(request.form['current_num_results'])  # retrieve number of search Results from input
+        user_url = request.form['current_user_url']
+        # convert to original, unembedded url for YouTube cap_search
+        original_url = user_url.split('&origin=')[1]
+        print((user_keyword, user_num_results, original_url))
+
+        # pass user data to caption search function
+        caption_results = search_cap(original_url, user_keyword, user_num_results) # return a list of dictionaries
+
+        print(caption_results)
+        print(type(caption_results))
+        results_data = {}
+        for i in range(len(caption_results)):
+            results_data[str(i)] = caption_results[i]
+        print(results_data)
+        #
+        # # results_data = {}
+        # results_data['results'] = caption_results
+        # results_data['index'] = [i for i in range(len(caption_results))]
+        # return jsonified caption results to client
+        response = jsonify(results_data)
+
+        # print(response)
+        # return user_keyword
+        return response
+
+    if request.method == "GET":
+        print('GET enabled!!!')
+
+        print()
+        return 'GET enabled!!!'
+
+
+# def json_hyper_explorer():
+#     data = request.data.decode("utf-8")
+#     print(data[0])
+#     current_query = data.current_query
+#     user_query_url = make_queryURL(current_query)
+#
+#     data = {}
+#     data['explorer_query'] = current_query
+#     data['query_url'] = user_query_url
+#
+#     response = jsonify(data)
+#     return response
+
+
+
+@app.route('/app', methods=['GET','POST'])
+def renderApp(): # feature 2 processing
     user_url = session['user_url']
-    explorer_query = request.form.get('explorer_query')
-    session['explorer_query'] = explorer_query
 
-    if session['explorer_query']:
-        query_url = explorer_query.replace(' ','+')
-        session['explorer_url']= "https://www.google.com/search?igu=1&ei=&q=" + query_url# str for the embedded explorer
+    if request.form.get('explorer_query'):
 
-        return render_template('main_page.html',session=session, user_url=user_url, original_URL=session['input_url'])
+        return "EXPLORER ON"
+        # current_query = request.form.get('explorer_query')
+        # current_query_url = make_queryURL(current_query)
+        # # response = jsonify({'user_query': current_query,
+        # #                     'query_url': current_query_url })
+        #
+        # data = {} #make a dictionary uf user data
+        # data['user_query'] = current_query
+        # data['query_url'] = current_query_url
+        #
+        # return redirect(url_for('json_hyper_explorer', data=data))
 
+
+        # with open('user.json', 'w') as outfile:
+        #     json.dump(data, outfile)
+        # #
+        # console.log(response)
+        # return response
+
+    return render_template('main.html', session=session)
 
 
 @app.route('/', methods=['GET','POST'])
-def renderMain():
-    eye_icon = os.path.join(app.config['UPLOAD_FOLDER'],'images', 'eye_icon.png' )
+def renderHome():
+    # get video URL from user input * should be a CC-ed YouTube link, or null
+    input_url= request.form.get('videoURL')
 
-    # request data from user input
     if request.method == 'POST':
-        input_url= request.form.get('videoURL')
-
-        if input_url: # if there is some input
-            session['input_url'] = input_url #store the original URL
-            # prossess the link string to embed in HTML & autoplay
+        if input_url: # if there's some input
+            # convert link to be embedable in HTML
             embeded_url = input_url.replace('https://www.youtube.com/watch?v=',
                     'https://www.youtube.com/embed/');
-            user_url = embeded_url+'?autoplay=1?control=0'
-            # store user url for the current session before search
-            session['user_url'] = user_url
-            # initiate key vars
-            session['keyword'] = None
-            session['num_results'] = None
-            session['explorer_query'] = None
+            # also turn on autoplay when page loads
+            user_url = embeded_url + '?autoplay=1&mute=1' + '&origin='+input_url
 
-            return render_template('main_page.html',session=session, user_url=session['user_url'], original_URL=input_url)
+            # store user url at current session
+            session['user_url'] = user_url
+            session['input_url'] = input_url
+
+            # redirect to 'app' page
+            return redirect(url_for('renderApp'))
 
         else:
-            return render_template('home.html',session=session, route='home_1_no_link_input')
-
+            return render_template('home.html', route='home_1_no_link_input')
     else:
         return render_template('home.html',route='home_2', notes="successful home rendering!")
-
-
-
-@app.route('/admin/<name>')
-def check_admin(name):
-    if name == 'jingren':
-        return 'Admin status verified.'
-    else:
-        return 'Please log in as guest.'

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Your Hypervideo Room</title>
+    {% include '/styles/_style_main.html' %}
+  </head>
+
+  <body>
+    <!-- let's get started -->
+
+    <div class="relative" >
+
+      <h1 style = "font-family:georgia,garamond,serif;font-size:22px;font-style:italic;">
+        "Don't let your lectures run you."</h1>
+      <p class='video_link' style="color:brown;"> **show user url:** <br> {{session['user_url']}} </p>
+
+      <div class="result_icons">
+          <div class="embedded_explorer" style=" overflow: hidden; opacity: 0.7">
+            <iframe id="explorer_frame" src="" style= "position:relative; width:100%; height:100%; border: none;"></iframe>
+          </div>
+
+          <div class="video_frame" >
+              <iframe id='YouTubeVideo' type="text/html" width="800"  height="600" src="{{session['user_url']}}" frameborder="0" ></iframe>
+          </div>
+
+          <div class="show_icons">
+          </div>
+
+
+                <!-- // links to build iframe mini browser within webpage
+                // https://stackoverflow.com/questions/32921815/embed-web-browser-within-web-page
+                // https://stackoverflow.com/questions/8863029/full-featured-iframe-w-forward-back-buttons-url-loader-etc -->
+
+      </div>
+
+      <div class="feature" id="feature_1">
+        <form method="POST" action="/" id='keyword_form' style=" background: #F8E016; top: 360px;">
+              <label id="keyword_label" style="margin-left: 10px;" > Keyword </label>
+              <input name="keyword" id="keyword_box" type="text" value="why" placeholder="e.g.problem" >
+              <br>
+              <label id="num_results_label" style="margin-left: 10px;"> Number of Results </label>
+              <input name="num_results"  id="num_results_box" type="text" value="2" placeholder="2" >
+              <br>
+              <button class="button" id="capsearch_button" type=”submit” name="form_butt"> Search </button>
+          </form>
+          <br>
+          <div class='toggle' id='f1_toggle' style="background: #F8E016; top: 360px;"> </div>
+      </div>
+
+      <div class="feature" id="feature_2">
+
+        ``<form action="" method="GET" id='explorer_form' style=" background: #16F867; top: 180px;">
+            <p id='explorer_title' style="margin-top: 10px; text-align: center; margin-bottom: 0px"> Hypervideo Explorer </p>
+
+            <input name="explorer_query" id="explorer_inputs" type="text" value="" placeholder="e.g.tutorial on entropy" style="margin-left: 10%; margin-top: 5%; width: 150px;">
+            <!-- <input  name="sitesearch" type="hidden" value="">
+            <input name="explorer_query" id="explorer_inputs" autocomplete="on" class="form-control search" name="q" placeholder=""
+                  style="margin-left: 10%; margin-top: 5%; width: 150px;"> -->
+            <br>
+            <button class="button" id="hypervideo_button"  type="submit">Explore</button>
+
+          </form>
+          <br>
+          <div class='toggle' id='f2_toggle' style="background: #16F867; top: 180px;"> </div>
+
+      </div>
+
+      <div class="feature" id="feature_3">
+        <form action="/" method="POST" id='intralink_form' style="background: #A968F3; top: 540px;">
+              <p id='intralink_title' style="margin-top: 17px; text-align: center; margin-bottom: 0px"> Select Two Moments to <br> Add An Intralink </p>
+              <button id="intralink_button" type=”submit” name="form_butt"> Add </button>
+          </form>
+          <br>
+          <div class='toggle' id='f3_toggle' style="background: #A968F3; top: 540px;"> </div>
+      </div>
+
+
+      <div class="debug" >
+            <p id='route_debug'> debug mode </p>
+            <div class="route_check">
+              {# temporary section: route checking for home page #}
+              {% with keyword=session['keyword'], num_results=session['num_results'],
+                    route=route, notes=notes, captions=captions,
+                      icon_pos=icon_pos, time_stamp=time_stamp %}
+                {% include 'temp/_route_checks_main.html' %}
+              {% endwith %}
+            </div>
+      </div>
+
+    </div>
+
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+      // toggle side bars
+        $("#f1_toggle").click(
+               function() {
+             $("#keyword_form").toggle();
+             $(".caption_icon").toggle();
+             $(".caption_text").toggle();
+           })
+
+        $("#f2_toggle").click(
+                function() {
+              $("#explorer_form").toggle();
+          })
+
+        $("#explorer_form").click(
+                  function() {
+                $(".embedded_explorer").toggle();
+            })
+
+        $("#f3_toggle").click(
+                function() {
+              $("#intralink_form").toggle();
+          })
+
+
+
+
+        // // // feature 2: embed Google search results
+        $('#explorer_form').on("submit",function(e){
+            e.preventDefault();
+            var user_query = $("#explorer_inputs").val()
+            // alert(user_query)
+            $.post("/explorer_query", { current_query : user_query} )
+                  .done (function (reply) {
+                    // alert("query posted to Python !");
+                    // alert(reply.user_query_url); // check if search_link is properly made
+                    // // var embedded_url = user_query_url;
+                    $("#explorer_frame").attr("src", reply.user_query_url); // insert user_query_url to iframe
+                    $(".embedded_explorer").show(); // show Google search bar
+                    $("#explorer_form").hide(); // hide search box
+
+                })
+                  .fail(function() { alert("error"); })
+        });
+
+        // hover show/ hoveroff hide for the Google search box
+        $(".embedded_explorer").hover(function(){
+            $('#explorer_frame').show();
+        },function(){
+            $('#explorer_frame').hide();
+        });
+
+        // //  feature 1: caption_search and results display
+        $('#keyword_form').on("submit",function(e){
+            e.preventDefault();
+            var caption_keywords = $("#keyword_box").val();
+            var num_results = $("#num_results_box").val();
+            var user_url = $('#YouTubeVideo').attr('src');
+
+            $.post("/caption_search",
+                      { current_keyword : caption_keywords,
+                        current_num_results : num_results,
+                        current_user_url: user_url })
+                  .done (function (data) {
+                      // alert("caption keywords & num_results posted to Python !");
+                      // alert(data[0].caption);
+
+                      $( ".show_icons" ).empty();  // empty results div
+
+                    // now convert caption timestamps to icon positions on video progress bar
+                      var items = [];
+                      var video_width = $('#YouTubeVideo').attr("width");
+
+                      $.each( data, function( key, val ) {
+                          var icon_pos_i = (video_width * 0.9698 * val.progress)+ 5.95;
+                          // alert(icon_pos_i);
+
+                          items.push(
+                            "<img class='caption_icon' id='flag_icon_" + key + "' value=" + key + " src='/static/icons/flag_icon.png' "+
+                                                 "alt='me.jpeg'  style='position: absolute; left: " + icon_pos_i + "px; '>" +
+                            "<p class='caption_text' id='captext_" + key +"' value=" + key  +  "> " + val.caption +  "</p>"
+                            );
+                        });
+
+                      var html_results_icon = items.join( "" ) // join each result flag
+                      // $( ".video_frame" ).before(html_results_icon);
+
+                      $( ".show_icons" ).append(html_results_icon);
+
+                })
+                  .fail(function() { alert("error"); })
+        });
+
+          $(".caption_icon").click(
+              function(){
+                  alert('flag clicked!')
+
+              }
+
+          );
+        // //  show dynamic caption results
+        //  $("#flag_icon").mouseover(function(){
+        //      alert('mouse ON flag')
+        //       var i = $(this).attr('value');
+        //       alert("#captext_"+i)
+        //       $("#captext_"+i).fadeIn();
+        //  });
+        //
+        //  $(".caption_icon").mouseleave(function(){
+        //      alert('mouse OFF flag')
+        //       var i = $(this).attr('value');
+        //
+        //       // alert(i);
+        //       $("#captext_"+i).fadeOut();
+        //  });
+
+
+
+
+
+
+      // links to build iframe mini browser within webpage
+      // https://stackoverflow.com/questions/32921815/embed-web-browser-within-web-page
+      // https://stackoverflow.com/questions/8863029/full-featured-iframe-w-forward-back-buttons-url-loader-etc
+
+      $(".debug").click(
+          function() {
+            $(".route_check").toggle();
+      })
+
+
+
+    </script>
+
+
+  </body>
+</html>
