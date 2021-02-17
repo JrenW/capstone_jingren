@@ -37,7 +37,7 @@ def search_cap(YouTube_URL, keyword,num_results):
     if len(kw_indices) > k:  # return k results of uniform spread acorss video
         for i in range(1, k+1):
             idx = max(1, len(kw_indices)*i//k-1)
-            print(idx)
+            # print(idx)
             if kw_indices[idx] not in results_indices:
                 results_indices.append(kw_indices[idx])
     else:

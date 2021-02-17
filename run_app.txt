@@ -1,7 +1,7 @@
 $ python -m venv venv
 
 # type in one of the two lines below
-$ source venv/bin/activate  # Activate virtual environment for MAC/UNIX
+$ source venv/bin/activate  # Activate virtual environment for MAC/UNIX (*please use bash shell)
 $ venv\Scripts\activate  # Activate virtual environment for WINDOWS
 
 # install dependencies

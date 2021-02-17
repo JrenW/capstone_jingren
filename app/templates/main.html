@@ -9,12 +9,11 @@
   </head>
 
   <body>
-    <!-- let's get started -->
 
     <div class="relative" >
-
       <h1 style = "font-family:georgia,garamond,serif;font-size:22px;font-style:italic;">
         "Don't let your lectures run you."</h1>
+
       <p class='video_link' style="color:brown;"> **show user url:** <br> {{session['user_url']}} </p>
 
       <div class='toggle' id='browser_toggle' style=""> </div>
@@ -36,10 +35,10 @@
         </div>
 
 
-
           <div class="video_frame" >
-              <iframe id='YouTubeVideo' type="text/html" width="800"  height="600" src="{{session['user_url']}}" frameborder="0" ></iframe>
-              <!-- <div id='progress_bar_padding'></div> -->
+              <!-- <iframe id='YouTubeVideo' type="text/html" width="800"  height="600" src="{{session['user_url']}}" frameborder="0" ></iframe> -->
+              <iframe id='YouTubeVideo' type="text/html" frameborder="0" width="800" ></iframe>
+              <div id="ytplayer" style="z-index: 2; position:absolute; top:0%; left:0%;  " ></div>
 
           </div>
 
@@ -49,22 +48,22 @@
       </div>
 
       <div class="feature" id="feature_1">
-        <form method="POST" action="/" id='keyword_form' style=" background: #F8E016; top: 56%;">
+        <form method="POST" action="/" id='keyword_form' style=" background: #F8E016; top: 54%;">
               <label id="keyword_label" style="margin-left: 10px;" > Keyword </label>
-              <input name="keyword" id="keyword_box" type="text" value="why" placeholder="e.g.problem" >
+              <input name="keyword" id="keyword_box" type="text" value="question" placeholder="e.g.problem" >
               <br>
               <label id="num_results_label" style="margin-left: 10px;"> Number of Results </label>
-              <input name="num_results"  id="num_results_box" type="text" value="2" placeholder="2" >
+              <input name="num_results"  id="num_results_box" type="text" value="4" placeholder="2" >
               <br>
               <button class="button" id="capsearch_button" type=”submit” name="form_butt"> Search </button>
           </form>
           <br>
-          <div class='toggle' id='f1_toggle' style="background: #F8E016; top: 56%;"> </div>
+          <div class='toggle' id='f1_toggle' style="background: #F8E016; top: 54%;"> </div>
       </div>
 
       <div class="feature" id="feature_2">
 
-         <form action="" method="GET" id='explorer_form' style=" background: #16F867; top: 16%;">
+         <form action="" method="GET" id='explorer_form' style=" background: #16F867; top: 18%;">
             <p id='explorer_title' style="margin-top: 10px; text-align: center; margin-bottom: 0px"> Hypervideo Explorer </p>
 
             <input name="explorer_query" id="explorer_inputs" type="text" value="" placeholder="paste in your link here" style="margin-left: 10%; margin-top: 5%; width: 150px;">
@@ -74,23 +73,41 @@
 
           </form>
           <br>
-          <div class='toggle' id='f2_toggle' style="background: #16F867; top:16%;"> </div>
+          <div class='toggle' id='f2_toggle' style="background: #16F867; top:18%;"> </div>
 
       </div>
 
       <div class="feature" id="feature_3">
-        <form action="/" method="POST" id='intralink_form' style="background: #A968F3; top: 36%;">
-              <p id='intralink_title' style="margin-top: 17px; text-align: center; margin-bottom: 0px"> Select Two Moments to <br> Add An Intralink </p>
-              <button id="intralink_button" type=”submit” name="form_butt"> Select </button>
-          </form>
-          <br>
-          <div class='toggle' id='f3_toggle' style="background: #A968F3; top: 36%;"> </div>
-      </div>
 
-      <div class="play_v_in_iframe">
-        <iframe src="https://www.youtube.com/embed/Rk8dCnKIfP4" name="iframe1"></iframe><br />
-            <a href="https://www.youtube.com/embed/Rk8dCnKIfP" target="iframe1" style=" position: absolute; top: 880px; left:310px;">Birth</a><br />
-            <a href="https://www.youtube.com/embed/CIFBjZU55so" target="iframe1">Article I</a>
+          <div class="feature_3_padding">
+
+          </div>
+
+          <form class="feature_3" id='confirm_select' action="/" method="GET" >
+                  <p id='confirm_question' style=" text-align: center; margin-bottom: 0px"> Pin here? </p>
+                  <div class="confirm_button" id='confirm_button_yes' style="  left:16%; top:36%; ">
+                      <img class="confirm_icon" id="confirm_icon_yes" src="/static/icons/thumbs_up_icon.png" alt="yes" >
+                 </div>
+
+                  <div class="confirm_button" id='confirm_button_no' style=" left:61%; top:36%;">
+                    <img class="confirm_icon" id="confirm_icon_no" src="/static/icons/thumbs_down_icon.png" alt="no" >
+
+                  </div>
+
+
+          </form>
+
+          <form class="feature_3" action="/" method="POST" id='intralink_form' style="background: #A968F3; top: 36%;">
+                <p id='intralink_title' style="margin-top: 17px; text-align: center; margin-bottom: 0px"> Select Two Moments to <br> Add An Intralink </p>
+                <button id="intralink_button" type=”submit” name="form_butt"> Select </button>
+          </form>
+
+          <div  class="progress_bar_padding" id="pg_bar_1" style=" top: 71.0%; ">  </div>
+          <div  class="progress_bar_padding" id="pg_bar_2" style=" top: 72.17%; ">  </div>
+          <div class="instruction" id="click_to_pin_moment" style="height: 30px; position: absolute; top:73%; left: 35%; color: white; font-size:15px; color: #D8BAF3;" > click purple bars to pin this moment </div>
+
+
+          <div class='toggle' id='f3_toggle' style="background: #A968F3; top: 36%;"> </div>
       </div>
 
 
@@ -108,18 +125,92 @@
 
     </div>
 
+
     <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
     <script type="text/javascript">
           // create a youtube player object
-        var player = document.getElementById("YouTubeVideo");
+        // 2. This code loads the IFrame Player API code asynchronously.
+        var tag = document.createElement('script');
 
-        // var explorer_iframe = document.getElementById('explorer_frame');
-        // explorer_iframe.onload = function () {
-        //     var body = explorer_iframe.contentWindow.document.querySelector('body');
-        //     body.style.color = 'red';
-        //     body.style.fontSize = '20px';
-        //     body.style.lineHeight = '20px';
-        // };
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        // 3. This function creates an <iframe> (and YouTube player)
+          //    after the API code downloads.
+          var player; // create a player object
+
+          function onYouTubeIframeAPIReady() {
+            player = new YT.Player('ytplayer', {
+              height: '600',
+              width: '800',
+              videoId: 'BCiZc0n6COY',
+              playerVars:{
+                'autoplay': 1, // autoplay on load
+                'fs':0,
+                'modestbranding': 0, // don't show smaller logo
+                'enablejsapi':1,
+                'cc_load_policy': 1
+              },
+              events: {
+                'onReady': onPlayerReady,
+                'onStateChange': onPlayerStateChange
+              }
+            });
+          }
+
+          // 4. The API will call this function when the video player is ready.
+          function onPlayerReady(event) {
+                  event.target.playVideo();
+                  player.mute();
+            }
+
+          // 5. The API calls this function when the player's state changes.
+          //    The function indicates that when playing a video (state=1),
+          //    the player should play for six seconds and then stop.
+          var done = false;
+          function onPlayerStateChange(event) {
+              // if (event.data == YT.PlayerState.PLAYING && !done) {
+              //   setTimeout(stopVideo, 6000);
+              //
+              //   done = true;
+              // }
+          }
+
+          function stopVideo() {
+            player.stopVideo();
+          }
+
+          // insert jQuery event handler
+          $('.gettime').on("click", function(){
+              alert('gettime button clicked!')
+              alert('current_time: '+ player.getCurrentTime()+ 's')
+              // player.seekTo(600, true);
+              // alert('jumped moments')
+
+          })
+
+
+          $('.set_playtime').on('submit',function(e){
+              e.preventDefault();
+              alert('LOOOOOL '  );
+              var new_time = $('#set_video_time').val()
+              var t_seconds = parseInt(new_time) // convert to int
+              // alert(typeof t_seconds)
+              // alert('-----player time SET at ' + t_seconds )
+
+              // add new start time
+              // var current_ytURL = $('#YouTubeVideo').attr('src');
+              var URL_play_at_new = current_ytURL+"&start="+String(t_seconds)
+              alert('new URL '+URL_play_at_new)
+              $('#YouTubeVideo').attr('src',URL_play_at_new);
+
+              // player.seekTo(t_seconds, true)
+              // setTimeout(stopVideo, 60000);
+              // alert('new time SET!!!')
+              // event.target.playVideo();
+              // player.mute();
+          })
 
 
         $("#browser_toggle").click(
@@ -137,7 +228,8 @@
         $("#f2_toggle").click(
                 function() {
               $("#explorer_form").toggle();
-              // $(".hyper_browsing").toggle();
+              $(".hyper_browsing").show();
+              // $(".results_frame").fadeIn();
           })
 
         $("#explorer_form").click(
@@ -148,8 +240,13 @@
         $("#f3_toggle").click(
                 function() {
               $("#intralink_form").toggle();
-          })
+              // $('.progress_bar_padding').toggle();
+              $('.progress_bar_padding').hide();
+              $('.start_pin').css('opacity', '0.8');
+              $('.start_pin').toggle();
+              $('.target_pin').fadeOut();
 
+          })
 
 
 
@@ -204,15 +301,20 @@
         //  feature 1: caption_search and results display
         $('#keyword_form').on("submit",function(e){
             e.preventDefault();
-            $(this).fadeOut(); // hide itself upon form submission
+            // $(this).fadeOut(); // hide itself upon form submission
             var caption_keywords = $("#keyword_box").val();
             var num_results = $("#num_results_box").val();
-            var user_url = $('#YouTubeVideo').attr('src');
+            // var user_url = $('#YouTubeVideo').attr('src');
+            var player_data = player.getVideoData()
+            var video_id = player_data['video_id']
+            // alert(video_id)
 
             $.post("/caption_search",
                       { current_keyword : caption_keywords,
                         current_num_results : num_results,
-                        current_user_url: user_url })
+                        // current_user_url: user_url,
+                        current_video_id: video_id})
+
                   .done (function (data) {
                       // alert("caption keywords & num_results posted to Python !");
                       // alert(data[0].caption);
@@ -221,14 +323,16 @@
 
                     // now convert caption timestamps to icon positions on video progress bar
                       var items = [];
-                      var video_width = $('#YouTubeVideo').attr("width");
+                      var video_width = $('#YouTubeVideo').contents().width()
+                      // alert(video_width)
+
 
                       $.each( data, function( key, val ) {
-                          var icon_pos_i = (video_width * 0.9698 * val.progress)+ 5.95;
+                          var icon_pos_i = (video_width * 0.9698 * val.progress)+ 5.95 - 34/4-2; // img_width=34 (center pin on moment)
                           // alert(icon_pos_i);
 
                           items.push(
-                            "<img class='caption_icon' id='flag_icon_" + key + "' value=" + key + " src='/static/icons/flag_icon.png' "+
+                            "<img class='caption_icon' id='caption_icon_" + key + "' value=" + String(val.time) + " src='/static/icons/caption_icon.png' "+
                                                  "alt='me.jpeg'  style='position: absolute; left: " + icon_pos_i + "px; '>" +
                             "<p class='caption_text' id='captext_" + key +"' value=" + key  +  "> " + val.caption +  "</p>"
                             );
@@ -240,62 +344,299 @@
 
                       // show/hide caption on mouse hover
                       $(".caption_icon").hover(function(){
-                          var idx = $(this).attr('value') // should be a str(int)
+                          var id = $(this).attr('id')
+                          var idx = id.substr(id.length - 1);  // should be a str(int)
                           $('#captext_'+idx).fadeIn() ;
                         });
 
                       $(".caption_icon").mouseleave(function(){
-                            var idx = $(this).attr('value') // should be a str(int)
-                            $('#captext_'+idx).fadeOut() ;
-                          });
+                          var id = $(this).attr('id')
+                          var idx = id.substr(id.length - 1);  // should be a str(int)
+                            // var idx = $(this).attr('value') // should be a str(int)
+                          $('#captext_'+idx).fadeOut() ;
+                        });
 
-                      // show/hide caption on mouse hover
-
+                      $(".caption_icon").click(function(){
+                          // alert('you just clicked me!')
+                          var timestamp = parseFloat($(this).attr('value'));
+                          // var t_seconds = String(parseInt(timestamp))
+                          // // alert(t_seconds)
+                          // // now play video from this specific moment on
+                          // var current_ytURL = $('#YouTubeVideo').attr('src');
+                          // var new_url_head = current_ytURL.split('&start=')[0] ;
+                          // var URL_play_at_new = new_url_head +"&start="+t_seconds
+                          // var unmute_URL_at_new = URL_play_at_new.replace('&mute=1','&mute=0')
+                          // // alert('new URL '+URL_play_at_new)
+                          // $('#YouTubeVideo').attr('src',unmute_URL_at_new);
+                          // var current_time = player.getCurrentTime();
+                          // alert(typeof current_time);
+                          player.seekTo(timestamp, true);
+                        });
                 })
                   .fail(function() { alert("error"); })
         });
 
+
+
+        //////////// feature 3: intralink ////////////
+        var time_stamps = [];
+        var pin_pos_array = [];
+        var pos_left, pos_top//px, absolute
+        var pin_counter = 0; // initiate an intralink pin counter
+
         $('#intralink_form').on("submit",function(e){
             e.preventDefault();
-            alert('select TWO moments on the progress bar!')
-            var timestamps = [];
+            // alert('select TWO moments on the progress bar!')
+            $('.progress_bar_padding').fadeIn()
+            // clear time_stampes
+            time_stamps = [];
+            // alert('start t_array: '+time_stamps)
+          });
 
-            $('.ytp-progress-bar').on("click", function(){
-                alert('progress bar clicked!!')
-                // var t = player.getCurrentTime();
-                // alert(t);
+        $('.progress_bar_padding').on('click', function(e){
+              // var current_time = String(player.getCurrentTime())
+              if ( time_stamps.length == 2) {
+                  // alert('wanna make an intralink now?')
+
+                  $(function() {
+
+                          var first_pin_left_pos = pin_pos_array[0]
+                          var last_pin_left_pos = pin_pos_array[pin_pos_array.length-1]
+                          // alert( typeof first_pin_left_pos)
+                          var actual_pin = String(first_pin_left_pos)
+                          var target_pin = String(last_pin_left_pos)
+                          // alert(actual_pin)
+                          pin_counter++;
+                          // alert("pin_counter = "+pin_counter)
+
+                          var intralink_pin_html = '<img class="start_pin" id="start_pin_'+pin_counter+'" style="left:'+ actual_pin + 'px;" value=" '+ time_stamps + ' "  src="/static/icons/intralink_icon.png">'
+                          var intralink_target_html = '<img class="target_pin" id="target_pin_'+pin_counter+'" style=" display:none; left:'+ target_pin + 'px;" value=" '+ time_stamps + ' "  src="/static/icons/intralink_target_icon.png">'
+                          $('.relative').before(intralink_pin_html)
+                          $('.relative').before(intralink_target_html)
+                          // pin_counter = pin_counter+1
+                          $('.temp_pin').remove();
+                          $('.progress_bar_padding').hide()
+                          pin_pos_array = [];
+                          time_stamps = [];
 
 
+                          $('.start_pin').click(function() {
+                              // jump to target time of intralink on click
+                              var get_ts = $(this).attr('value')
+                              var id = $(this).attr('id')
+                              var idx = id[id.length-1]
 
+                              // alert('spot an intralink pin !!, timestampes = '+get_ts)
+                              // alert(typeof get_ts)
+                              var t_pairs = get_ts.split(',')
+                              var seek_t = t_pairs[t_pairs.length-1] // seek target time
+                              // alert('new time at'+ seek_t)
+                              player.seekTo(seek_t, true) // jump to target time upon click
+                              // $(this).fadeOut()
+                              $(this).css('opacity', '0');
+                              $('#target_pin_'+idx).fadeIn()
+                          });
+
+                          $('.target_pin').on('click', function(){
+                              // revert back to start_time on click
+                              var get_ts = $(this).attr('value')
+                              var id = $(this).attr('id')
+                              var idx = id[id.length-1]
+
+                              // alert('spot an intralink pin !!, timestampes = '+get_ts)
+                              // alert(typeof get_ts)
+                              var t_pairs = get_ts.split(',')
+                              var seek_t = t_pairs[0] // seek start time
+                              // alert('end time at'+ seek_t)
+                              player.seekTo(seek_t, true) // jump to target time upon click
+                              $(this).fadeOut()
+                              $('#start_pin_'+idx).css('opacity', '0.8');
+                              $('#start_pin_'+idx).fadeIn()
+
+                          })
+
+                    });
+
+                }
+                else {
+                  pos_left = e.pageX-12//px, absolute
+                  // alert('left_pos: '+pos_left );
+                  $('#confirm_select').toggle(); // show confirm question
+              }
+          })
+
+        $("#pg_bar_1").on('mouseenter',function(){
+              $('#click_to_pin_moment').fadeIn();
             });
 
-        });
-
-        // $(".gcse-searchresults").bind({
-        //        copy : function(){
-        //            alert('copy behaviour detected!');
-        //        },
-        //        paste : function(){
-        //            alert('paste behaviour detected!');
-        //        },
-        //        cut : function(){
-        //            alert('cut behaviour detected!');
-        //        }
-        //    });
+        $("#pg_bar_1").on('mouseleave',function(){
+                $('#click_to_pin_moment').fadeOut();
+            });
 
 
+        $('#confirm_button_yes').on('click', function(){
+
+
+            var pin_html = '<img class="temp_pin" style="position:absolute; width:24px; height:24px; z-index: 200; left:'+ pos_left + 'px; top:636px;" src="/static/icons/moment_pin_icon.png">'
+
+            // $(".hyper_browsing").before(pin_tag);
+            $(".relative").before(pin_html);
+            // alert('image pinned!')
+
+            if ( time_stamps.length == 2) {
+                  // alert('wanna make an intralink now?')
+
+                  $(function() {
+
+                          var first_pin_left_pos = pin_pos_array[0]
+                          var last_pin_left_pos = pin_pos_array[pin_pos_array.length-1]
+                          // alert( typeof first_pin_left_pos)
+                          var actual_pin = String(first_pin_left_pos)
+                          var target_pin = String(last_pin_left_pos)
+                          // alert(actual_pin)
+                          pin_counter++;
+                          // alert("pin_counter = "+pin_counter)
+
+                          var intralink_pin_html = '<img class="start_pin" id="start_pin_'+pin_counter+'" style="left:'+ actual_pin + 'px;" value=" '+ time_stamps + ' "  src="/static/icons/intralink_icon.png">'
+                          var intralink_target_html = '<img class="target_pin" id="target_pin_'+pin_counter+'" style=" display:none; left:'+ target_pin + 'px;" value=" '+ time_stamps + ' "  src="/static/icons/intralink_target_icon.png">'
+                          $('.relative').before(intralink_pin_html)
+                          $('.relative').before(intralink_target_html)
+                          // pin_counter = pin_counter+1
+                          $('.temp_pin').remove();
+                          $('.progress_bar_padding').fadeOut()
+                          pin_pos_array = [];
+                          time_stamps = [];
 
 
 
 
-      // links to build iframe mini browser within webpage
-      // https://stackoverflow.com/questions/32921815/embed-web-browser-within-web-page
-      // https://stackoverflow.com/questions/8863029/full-featured-iframe-w-forward-back-buttons-url-loader-etc
+                          $('.start_pin').click(function() {
+                              // jump to target time of intralink on click
+                              var get_ts = $(this).attr('value')
+                              var id = $(this).attr('id')
+                              var idx = id[id.length-1]
 
-      $(".debug").click(
-          function() {
-            $(".route_check").toggle();
+                              // alert('spot an intralink pin !!, timestampes = '+get_ts)
+                              // alert(typeof get_ts)
+                              var t_pairs = get_ts.split(',')
+                              var seek_t = t_pairs[t_pairs.length-1] // seek target time
+                              // alert('new time at'+ seek_t)
+                              player.seekTo(seek_t, true) // jump to target time upon click
+                              // $(this).fadeOut()
+                              $(this).css('opacity', '0');
+                              $('#target_pin_'+idx).fadeIn()
+                          });
+
+                          $('.target_pin').on('click', function(){
+                              // revert back to start_time on click
+                              var get_ts = $(this).attr('value')
+                              var id = $(this).attr('id')
+                              var idx = id[id.length-1]
+
+                              // alert('spot an intralink pin !!, timestampes = '+get_ts)
+                              // alert(typeof get_ts)
+                              var t_pairs = get_ts.split(',')
+                              var seek_t = t_pairs[0] // seek start time
+                              // alert('end time at'+ seek_t)
+                              player.seekTo(seek_t, true) // jump to target time upon click
+                              $(this).fadeOut()
+                              $('#start_pin_'+idx).css('opacity', '0.8');
+                              $('#start_pin_'+idx).fadeIn()
+
+                          })
+
+                    });
+
+
+                }
+
+            else {
+              var current_time = player.getCurrentTime();
+              time_stamps.push(current_time)
+              pin_pos_array.push(pos_left)
+              // alert(pin_pos_array)
+              // alert(time_stamps)
+
+              // alert("add one more time "+ time_stamps)
+              $('#confirm_select').fadeOut();
+
+              if ( time_stamps.length == 2) {
+                  // alert('wanna make an intralink now?')
+
+                  $(function() {
+
+                          var first_pin_left_pos = pin_pos_array[0]
+                          var last_pin_left_pos = pin_pos_array[pin_pos_array.length-1]
+                          // alert( typeof first_pin_left_pos)
+                          var actual_pin = String(first_pin_left_pos)
+                          var target_pin = String(last_pin_left_pos)
+                          // alert(actual_pin)
+                          pin_counter++;
+                          // alert("pin_counter = "+pin_counter)
+
+                          var intralink_pin_html = '<img class="start_pin" id="start_pin_'+pin_counter+'" style="left:'+ actual_pin + 'px;" value=" '+ time_stamps + ' "  src="/static/icons/intralink_icon.png">'
+                          var intralink_target_html = '<img class="target_pin" id="target_pin_'+pin_counter+'" style=" display:none; left:'+ target_pin + 'px;" value=" '+ time_stamps + ' "  src="/static/icons/intralink_target_icon.png">'
+                          $('.relative').before(intralink_pin_html)
+                          $('.relative').before(intralink_target_html)
+                          // pin_counter = pin_counter+1
+                          $('.temp_pin').remove();
+                          $('.progress_bar_padding').hide()
+                          pin_pos_array = [];
+                          time_stamps = [];
+
+
+                          $('.start_pin').click(function() {
+                              // jump to target time of intralink on click
+                              var get_ts = $(this).attr('value')
+                              var id = $(this).attr('id')
+                              var idx = id[id.length-1]
+
+                              // alert('spot an intralink pin !!, timestampes = '+get_ts)
+                              // alert(typeof get_ts)
+                              var t_pairs = get_ts.split(',')
+                              var seek_t = t_pairs[t_pairs.length-1] // seek target time
+                              // alert('new time at'+ seek_t)
+                              player.seekTo(seek_t, true) // jump to target time upon click
+                              // $(this).fadeOut()
+                              $(this).css('opacity', '0'); // fake 'fadeOut'
+                              $('#target_pin_'+idx).fadeIn()
+                          });
+
+                          $('.target_pin').on('click', function(){
+                              // revert back to start_time on click
+                              var get_ts = $(this).attr('value')
+                              var id = $(this).attr('id')
+                              var idx = id[id.length-1]
+
+                              // alert('spot an intralink pin !!, timestampes = '+get_ts)
+                              // alert(typeof get_ts)
+                              var t_pairs = get_ts.split(',')
+                              var seek_t = t_pairs[0] // seek start time
+                              // alert('end time at'+ seek_t)
+                              player.seekTo(seek_t, true) // jump to target time upon click
+                              $(this).fadeOut()
+                              $('#start_pin_'+idx).css('opacity', '0.8');
+                              $('#start_pin_'+idx).fadeIn()
+
+                          })
+
+                    });
+
+                }
+            }
+        })
+
+      $('#confirm_button_no').on('click', function(){
+            // alert('you said NO!')
+            $('#confirm_select').fadeOut();
       })
+
+
+      
+      $(".debug").click(
+            function() {
+              $(".route_check").toggle();
+        })
 
 
 
