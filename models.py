@@ -1,11 +1,14 @@
-# here contains all the functions needed for interactive features
+''' This script contains all necessary back-end algorithms and models to process from user input
+        * Currently supporting the caption search function
+    Future back-end algorithms shall be defined here, then exported to routes.py for use
+'''
 
 def search_cap(YouTube_URL, keyword,num_results):
     '''a function that takes in a YouTube URL and
         a keyword(can be a phrase) upon user input,
-        and return a list of time-caption dictionaries
-    e.g. {'time': 6.23,  'caption': " so, what is information theory"}
-        list size = num_results
+        then return a list of time-caption dictionaries
+        e.g. {'time': 6.23,  'caption': " so, what is information theory"}
+            list size = num_results
         '''
     from youtube_transcript_api import YouTubeTranscriptApi as YouTrans
     URL = YouTube_URL

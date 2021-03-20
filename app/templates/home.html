@@ -9,51 +9,29 @@
   </head>
 
   <body>
-    <!-- let's get started -->
+
     <div class="relative" id='home_instruction'>
 
+        <div class="input_link">
+            <h1 style="margin-top: 150px;">Your Hypervideo Learning Room</h1>
 
-  <div class="input_link">
-      <h1 style="margin-top: 150px;">Your Hyper Video Learning Room</h1>
+            <h3> Paste in a link of YouTube lecture (with CC on) and you're all set.</h3>
 
-      <h3> Paste in a link to your YouTube lecture and you're all set.</h3>
+            <p style="color:brown; "> ** test link ** </p>
+            <p style="color:brown;"> https://www.youtube.com/watch?v=BCiZc0n6COY</p>
 
-      <p style="color:brown; "> ** test link ** </p>
-      <p style="color:brown;"> https://www.youtube.com/watch?v=BCiZc0n6COY</p>
+            <form id="input_link_box" action="" method="POST">
+                <input name="videoURL" id="videoURL" type="text" value="" placeholder="add a YouTube link (with transcript available)">
+                <button type=”submit” name="form_butt" > Start </button>
+            </form>
 
-      <form id="input_link_box" action="" method="POST">
-          <!-- <label> YouTube Link </label> -->
-          <input name="videoURL" id="videoURL" type="text" value="" placeholder="Add a YouTube Link">
-          <button type=”submit” name="form_butt" > Start </button>
-      </form>
+            <h6>*This app currently only support YouTube videos with transcripts</h6>
+            <h6>( check if "CC" button is NOT disabled at the bottom of your video frame )</h6>
 
-      <h6>*This app currently only support YouTube videos with transcripts ("CC" button available at the bottom of your video frame.)</h6>
+         </div>
 
-     </div>
-
-
-      <div class="debug" >
-              <p id='route_debug'> debug mode </p>
-      </div>
-
-       <div class="route_check">
-         {# temporary section: route checking for home page #}
-         {% with route=route, notes=notes %}
-           {% include 'temp/_route_checks_home.html' %}
-         {% endwith %}
-      </div>
     </div>
 
-    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-    <script type="text/javascript">
-
-    $(".debug").click(
-             function() {
-           $(".route_check").toggle();
-
-         })
-
-    </script>
-
   </body>
+
 </html>
