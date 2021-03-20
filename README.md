@@ -26,7 +26,9 @@ The final product is a working web app running on Flask virtual server that acce
 * Procfile - a file for Heroku to understand what to do once app is built for deployment
 *  run_app.txt - auxiliary file to instruct manual deployment on local machine
 
-### Deployment with Heroku
+### App Deployment 
+
+### Deploy with Heroku
 The app will be deployed with Heroku: [https://capstone-hypervideo.herokuapp.com/]
 *Note: please try and reload the webpage for several times if you encountered a 500 Internal Server Error, especially if you are behind a proxy.
 
