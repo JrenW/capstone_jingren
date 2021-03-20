@@ -1,38 +1,18 @@
 # Capstone Project, Class 2021
 
-### Project title: Active Learning ‘with-IN’ MOOC-style Videos 
+## Project title: Active Learning ‘with-IN’ MOOC-style Videos 
 ### Student Name:  Jingren Wang, Class 2021
 ### Major: Computational Science
 ### Concentrations: Artificial Intelligence & Data Science
 
 ## Abstract
 
-Thanks to the Massive Open Online Courses (MOOCs) movement, self-learning has become more efficient by home-watching lecture videos curated by top universities around the world. However, few self learners can really sit through, say, a three-hour Cambridge lecture video on Information Theory. In fact, 90% of MOOCs students drop out quickly after 2-week enrollment. Although lecture videos are great for knowledge dissemination, its heavy length and lack of interactivity often stifles “Active Learning”, the power engine of one’s life-long intellectual growth. <br>
-
-With a vision to make the MOOCs experience much more ‘active’ for the benefits of self-learners, my project aims to turn passive video ‘watching’ into active video ‘reading’ by interacting with features 'with-IN' the video frame. First, the project will explore various machine-learning algorithms on automatic video content extraction & learning; then apply learning results to build a web interface with features like: <br>
-      1) caption-based keyword search within a lecture videos; 
-      2) editing tool for users to DIY intra-video hyperlinks for nonlinear content navigation; 
-      3) embedded explorer to search and hyper-link one moment to outside video/multimedia resources; 
-<br>
-The final product is going to be a working web app running on Flask virtual server which takes in a youtube video link and displays interactive features stated above.
-
-## Progress
-
-**[Early Stage]**
-- Preliminary User Interest Research [100%]
-- Gap Analysis [100% ]
-- MVP [80% ] -- *only on first feature -- caption-based keyword search
-- Detailed Outline [100%]
-
-**[Middle Stage]**
-- Background & Literature Review [100% ]
-- Product Visuals/Schematics - Mockups [70%]
-- Commented code/ annotated products [45%]
-- Analysis and user feedback [50%]
-- Incorporation of feedbacks into feature iterations [40%]
-
-**[Late Stage]**
-0%
+Thanks to the Massive Open Online Courses (MOOCs) movement, self-learning has become more efficient by home-watching lecture videos curated by top universities around the world. However, few self learners can really sit through college lecture videos which commonly run for two to three hours. In fact, 90% of MOOCs students drop out quickly after 2-week enrollment. Although lecture videos are great for knowledge dissemination, its heavy length and lack of interactivity often stifles “Active Learning”, the power engine of one’s life-long intellectual growth.<br>
+With a vision to make the MOOCs experience much more ‘active’ for the benefits of self-learners, my project aims to turn passive video ‘watching’ into active video ‘reading’ by interacting with features 'with-IN' the video frame. First, this project explores various machine-learning algorithms on automatic video content extraction & learning; then apply learning results to build a web interface with features like: <br>
+      1) a caption-based keyword search engine to find contents within a video; <br>
+      2) a floating  ‘explorer’ to search external multimedia resources (e.g. wikipedia) while streaming the lecture video; <br>
+      3) editing tool to create intra-video hyperlinks for nonlinear content navigation; <br>
+The final product is a working web app running on Flask virtual server that accepts a youtube video link and displays all three interactive learning features outlined above.
 
 
 ## App design
