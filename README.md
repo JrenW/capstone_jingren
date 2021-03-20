@@ -11,9 +11,9 @@ Thanks to the Massive Open Online Courses (MOOCs) movement, self-learning has be
 
 With a vision to make the MOOCs experience much more ‘active’ for the benefits of self-learners, my project aims to turn passive video ‘watching’ into active video ‘reading’ by interacting with features 'with-IN' the video frame. First, this project explores various machine-learning algorithms on automatic video content extraction & learning; then apply learning results to build a web interface with features like: <br>
 
-      1) a caption-based keyword search engine to find contents within a video; <br>
-      2) a floating  ‘explorer’ to search external multimedia resources (e.g. wikipedia) while streaming the lecture video; <br>
-      3) editing tool to create intra-video hyperlinks for nonlinear content navigation; <br>
+  1) a caption-based keyword search engine to find contents within a video; <br>
+  2) a floating  ‘explorer’ to search external multimedia resources (e.g. wikipedia) while streaming the lecture video; <br>
+  3) editing tool to create intra-video hyperlinks for nonlinear content navigation; <br>
     
 The final product is a working web app running on Flask virtual server that accepts a youtube video link and displays all three interactive learning features outlined above.
 
@@ -28,7 +28,7 @@ The final product is a working web app running on Flask virtual server that acce
 
 ### Deployment with Heroku
 The app will be deployed with Heroku: [https://capstone-hypervideo.herokuapp.com/]
-
+*Note: please try and reload the webpage for several times if you encountered a 500 Internal Server Error, especially if you are behind a proxy.
 
 ### Manual Deployment from Git clone
 
