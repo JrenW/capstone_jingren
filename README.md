@@ -7,15 +7,15 @@
 
 ## Abstract
 
-Thanks to the Massive Open Online Courses (MOOCs) movement, self-learning has become more efficient by home-watching lecture videos curated by top universities around the world. However, few self learners can really sit through college lecture videos which commonly run for two to three hours. In fact, 90% of MOOCs students drop out quickly after 2-week enrollment. Although lecture videos are great for knowledge dissemination, its heavy length and lack of interactivity often stifles “Active Learning”, the power engine of one’s life-long intellectual growth.<br>
+Thanks to the Massive Open Online Courses (MOOCs) movement, self-learning has become more efficient by home-watching lecture videos curated by top universities worldwide. However, few self-learners can sit through college lecture videos which commonly run for two to three hours. Surprisingly 90% of MOOCs students drop out quickly after two-week enrollment. Although lecture videos are great for knowledge dissemination, their heavy length and lack of interactivity often stifle “active learning”, the power engine of one’s life-long intellectual growth.<br>
 
-With a vision to make the MOOCs experience much more ‘active’ for the benefits of self-learners, my project aims to turn passive video ‘watching’ into active video ‘reading’ by interacting with features 'with-IN' the video frame. First, this project explores various machine-learning algorithms on automatic video content extraction & learning; then apply learning results to build a web interface with features like: <br>
+With a vision to make the MOOCs experience much more “active” for the benefits of self-learners, my project aims to turn passive video “watching” into active video “reading” by interacting with features “with-IN” the video frame. First, this project explores various machine-learning algorithms on automatic video content extraction & learning; then apply learning results to build a web interface with features like: <br>
 
   1) a caption-based keyword search engine to find contents within a video; <br>
   2) a floating  ‘explorer’ to search external multimedia resources (e.g. wikipedia) while streaming the lecture video; <br>
-  3) editing tool to create intra-video hyperlinks for nonlinear content navigation; <br>
+   3) editing tool to create intra-video hyperlinks for nonlinear content navigation; <br>
     
-The final product is a working web app running on Flask virtual server that accepts a youtube video link and displays all three interactive learning features outlined above.
+The final product is a working web app built on python Flask framework. The app will accept a youtube video link and redirect to the main page where users can interact with all three interactive learning features outlined above.
 
 ## File System
 * app folder - contains all Flask web routes defined in 'main.py'; 'templates' folder for all htmls, and static folder for graphical icons.
